@@ -1,0 +1,15 @@
+
+body{
+    font-family: 'Comic Sans MS', sans-serif;
+}
+
+.article-link{
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+.article-link:hover > article{
+    /*border: 1px solid gray;*/
+    color: #8181f3;
+    border: 1px transparent solid;
+}

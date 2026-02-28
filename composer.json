@@ -1,0 +1,23 @@
+{
+  "name": "cipriano/blog",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "require": {
+    "php-di/php-di": "^7.1",
+    "twbs/bootstrap": "5.3.8",
+    "ext-pdo": "*",
+    "ext-pdo_sqlite": "*"
+  },
+  "scripts": {
+    "copy-bootstrap": "php scripts/copy-bootstrap.php",
+    "post-install-cmd": [
+      "@copy-bootstrap"
+    ],
+    "post-update-cmd": [
+      "@copy-bootstrap"
+    ]
+  }
+}
