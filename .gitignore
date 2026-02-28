@@ -1,2 +1,4 @@
 vendor/
 public/assets/bootstrap/
+.idea
+/src/Data/data.sqlite
