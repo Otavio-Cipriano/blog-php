@@ -1,5 +1,7 @@
 {
-  "name": "cipriano/blog",
+  "name": "app/blog",
+  "description": "Blog simples em PHP usando DI e SQLite",
+  "license": "proprietary",
   "autoload": {
     "psr-4": {
       "App\\": "src/"
@@ -7,7 +9,7 @@
   },
   "require": {
     "php-di/php-di": "^7.1",
-    "twbs/bootstrap": "5.3.8",
+    "twbs/bootstrap": "^5.3.8",
     "ext-pdo": "*",
     "ext-pdo_sqlite": "*"
   },
