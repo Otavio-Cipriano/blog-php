@@ -2,52 +2,81 @@
 
 namespace App\Controllers;
 
+use App\Repositories\UserRepository;
+use App\Utils\CRSF;
+
 class AuthController
 {
-    public static function auth()
+
+    private static function initSession(): void
     {
-        session_start();
-        if(!isset($_SESSION['user'])){
-            header('Location: /login');
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+    public static function login()
+    {
+        self::initSession();
+        if (isset($_SESSION['user'])) {
+            header('Location: /admin');
             exit();
         }
 
-        include __DIR__ . '/../Pages/admin.php';
-    }
-
-    public static function login()
-    {
-        session_start();
-        if(isset($_SESSION['user'])){
-           header('Location: /admin');
-           exit();
-        }
-
+        $errors = $_SESSION['errors']?? [];
+        unset($_SESSION['errors']);
+        $csrf = CRSF::createToken();
+        var_dump($errors);
         include __DIR__ . '/../Pages/login.php';
     }
 
-    public static function loginPost()
+    public static function authenticate()
     {
-        session_start();
+        self::initSession();
         $errors = $_SESSION['errors'] ?? [];
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_SPECIAL_CHARS);
+        $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
+        $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 
-            $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
-            $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
+        if (!$token || !CRSF::validateToken($token)){
+            $errors['token'] = 'Token Inválido';
+        }
+        if (!$username) {
+            $errors['username'] = 'Username Inválido!';
+        }
+        if (!$password) {
+            $errors['password'] = 'Password Inválida!';
+        }
 
-            if(!$username){
-                $errors['username'] = 'Username Inválido!';
+
+        if (empty($errors)) {
+            $userRepo = new UserRepository();
+            $user = $userRepo->fetchOneByUsername($username);
+
+            if ($user) {
+                $errors['test'] = $user->verifyPassword($password);
+                if($user->verifyPassword($password)){
+                    $_SESSION['user'] = get_object_vars($user);
+                    header('Location: /admin');
+                    exit();
+                }
+
+                $errors['username'] = "Username ou Password incorretas";
+                $errors['password'] = "Username ou Password incorretas";
             }
-            if(!$password){
-                $errors['password'] = 'Password Inválida!';
-            }
+        }
 
-            if(empty($errors)){
-                
-            }
+        $_SESSION['errors'] = $errors;
+        header('Location: /login');
+        exit();
+    }
 
-            //Check if user exists
-            //Check if password is right
+    public static function logout()
+    {
+        self::initSession();
+        if($_SESSION['user']){
+            unset($_SESSION['user']);
+            header('Location: /');
+            exit();
         }
     }
 }

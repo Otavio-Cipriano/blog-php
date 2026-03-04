@@ -20,8 +20,8 @@ class User
         $this->password = $password;
     }
 
-    public function verifyPassword(string $hash): bool
+    public function verifyPassword(string $plainPassword): bool
     {
-        return password_verify($this->password, $hash);
+        return password_verify($plainPassword, $this->password);
     }
 }

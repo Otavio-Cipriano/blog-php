@@ -13,3 +13,18 @@ body{
     color: #8181f3;
     border: 1px transparent solid;
 }
+
+input.error{
+    border-color: red;
+}
+
+#editor {
+    min-height: 200px;
+    max-height: 800px;
+    resize: vertical;
+    overflow-y: auto;
+}
+.ql-editor.ql-blank{
+    min-height: 200px;
+    max-height: 800px;
+}
