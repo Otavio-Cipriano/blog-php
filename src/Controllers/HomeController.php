@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Repositories\PostsRepository;
 use App\Service\PostService;
 use Core\Http\Request;
 use Core\Http\Response;

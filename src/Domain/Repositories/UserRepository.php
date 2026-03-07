@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Repositories;
 
 use App\Database\Connection;
 use App\Domain\Models\User;
 use PDO;
+
 class UserRepository
 {
     protected PDO $pdo;

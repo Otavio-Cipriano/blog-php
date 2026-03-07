@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Repositories;
 
 use App\Database\Connection;
-use PDO;
 use App\Domain\Models\Post;
+use PDO;
 
 class PostsRepository
 {
@@ -57,6 +57,22 @@ class PostsRepository
         }catch (\PDOException $e){
             echo $e->getMessage();
             return false;
+        }
+    }
+
+    public function create(Post $post): ?Post
+    {
+        try {
+            $stmt = $this->pdo->prepare('insert into posts (title, content) values (:title, :content)');
+            $stmt->execute([
+                'title' => $post->title,
+                'content' => $post->content
+            ]);
+            $id = $this->pdo->lastInsertId();
+            return new Post($id, $post->title, $post->title, $post->publishedAt, $post->updatedAt);
+        }catch (\PDOException $e){
+            echo $e->getMessage();
+            return null;
         }
     }
 

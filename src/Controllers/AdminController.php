@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Repositories\PostsRepository;
 use App\Service\PostService;
 
 class AdminController
@@ -24,15 +23,5 @@ class AdminController
         [$page, $hasNext, $hasPrev, $posts, $totalPages] = PostService::getPostsAndSetPagination(10);
 
         include __DIR__ . '/../Pages/admin.php';
-    }
-    
-    public static function updatePost()
-    {
-        include __DIR__ . '/../Pages/update.php';
-    }
-
-    public static function createPost()
-    {
-        include __DIR__ . '/../Pages/create.php';
     }
 }

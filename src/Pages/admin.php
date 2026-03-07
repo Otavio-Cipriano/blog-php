@@ -11,7 +11,7 @@
  * */
 ?>
 <hr/>
-<a class="btn btn-primary" href="/create">Novo</a>
+<a class="btn btn-primary" href="/post/create">Novo</a>
 <div class="mt-5">
     <?php foreach ($posts as $post): ?>
         <article class="row mb-4 mt-4 pt-2 pb-2">

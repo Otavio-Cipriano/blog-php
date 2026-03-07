@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Repositories\PostsRepository;
+use App\Domain\Repositories\PostsRepository;
 
 class PostService
 {

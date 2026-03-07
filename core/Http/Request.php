@@ -10,6 +10,7 @@ class Request
     public protected(set) array $query = [];
     public protected(set) array $headers;
     public protected(set) array $params = [];
+    public protected(set) array $body;
 
     public function __construct()
     {
@@ -23,6 +24,12 @@ class Request
     public function setParams(array $params): void
     {
         $this->params = $params;
+    }
+
+    public function getBody()
+    {
+        $test = $_POST;
+
     }
 
 }

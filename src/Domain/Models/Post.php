@@ -17,7 +17,7 @@ class Post
      * @param string $publishedAt
      * @param string|null $updatedAt
      */
-    public function __construct(?int $id, string $title, ?string $content, string $publishedAt, ?string $updatedAt)
+    public function __construct(?int $id, string $title, ?string $content, ?string $publishedAt, ?string $updatedAt)
     {
         $this->id = $id;
         $this->title = $title;

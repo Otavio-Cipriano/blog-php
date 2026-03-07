@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Repositories\UserRepository;
+use App\Domain\Repositories\UserRepository;
 use App\Utils\CRSF;
 
 class AuthController

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Core;
 
 use App\Controllers\AdminController;
 use App\Controllers\AuthController;
