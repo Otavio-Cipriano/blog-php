@@ -25,7 +25,6 @@ class AuthController
         $errors = $_SESSION['errors']?? [];
         unset($_SESSION['errors']);
         $csrf = CRSF::createToken();
-        var_dump($errors);
         include __DIR__ . '/../Pages/login.php';
     }
 

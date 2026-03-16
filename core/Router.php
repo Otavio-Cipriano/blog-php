@@ -48,9 +48,13 @@ class Router
         ];
     }
 
-    public function setMiddleware(string $path, callable $controller, string $method)
+    public function setMiddleware(array $paths, array $controllerAndMethod)
     {
-        $this->middlewares[$path] = [$controller, $method];
+        $paths = array_map(fn ($path) => trim($path, '/'), $paths);
+        $this->middlewares[] = [
+            'paths' => $paths,
+            'action' => $controllerAndMethod
+        ];
     }
 
     public function run(): void
@@ -63,6 +67,7 @@ class Router
 
             if ($this->match($route['path'], $this->request->path, $params)) {
 
+                $this->checkMiddlewares($route['path']);
                 $this->request->setParams($params);
 
                 [$controller, $action] = $route['action'];
@@ -74,6 +79,17 @@ class Router
         }
 
         echo "404 Page not found";
+    }
+
+    public function checkMiddlewares($path): void
+    {
+        foreach ($this->middlewares as $middleware) {
+            if (in_array($path, $middleware['paths'])){
+                [$middle, $action] = $middleware['action'];
+
+                $middle::$action($this->request, $this->response);
+            }
+        }
     }
 
     private function match(string $routePath, string $requestPath, ?array &$params = []): bool

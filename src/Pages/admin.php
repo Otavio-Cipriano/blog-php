@@ -23,7 +23,7 @@
                 </article>
             </a>
             <div class="col-lg-2 col-md-3 text-end">
-                <a href="/update">Update</a>
+                <a href="/post/<?= $post->id ?>/update">Update</a>
                 <a href="/delete">Delete</a>
             </div>
         </article>

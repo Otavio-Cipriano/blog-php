@@ -15,17 +15,17 @@ class PostsRepository
         $this->pdo = Connection::get();
     }
 
-    public function fetchMany(int $limit = 10, int $offset = 0): ?array
+    public function fetchMany(int $limit = 10, int $offset = 0, string $filter = 'recent'): ?array
     {
         try {
-            $stmt = $this->pdo->prepare('select id, title, published_at from posts limit :limit offset :offset');
+            $stmt = $this->pdo->prepare('select id, title, published_at from posts order by published_at desc limit :limit offset :offset');
             $stmt->execute([
                 'limit' => $limit,
                 'offset' => $offset
             ]);
             $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return Post::getPosts($posts);
-        }catch (\PDOException $e){
+        } catch (\PDOException $e) {
             echo $e->getMessage();
             return null;
         }
@@ -37,7 +37,7 @@ class PostsRepository
             $stmt = $this->pdo->prepare('select count(*) from posts');
             $stmt->execute();
             return $stmt->fetchColumn();
-        }catch (\PDOException $e){
+        } catch (\PDOException $e) {
             echo $e->getMessage();
             return null;
         }
@@ -50,11 +50,11 @@ class PostsRepository
             $stmt->execute(['id' => $id]);
             $post = $stmt->fetch(PDO::FETCH_ASSOC);
             return new Post($post['id'],
-                        $post['title'],
-                        $post['content'],
-                        $post['published_at'],
-                        $post['updated_at']);
-        }catch (\PDOException $e){
+                $post['title'],
+                $post['content'],
+                $post['published_at'],
+                $post['updated_at']);
+        } catch (\PDOException $e) {
             echo $e->getMessage();
             return false;
         }
@@ -70,9 +70,30 @@ class PostsRepository
             ]);
             $id = $this->pdo->lastInsertId();
             return new Post($id, $post->title, $post->title, $post->publishedAt, $post->updatedAt);
-        }catch (\PDOException $e){
+        } catch (\PDOException $e) {
             echo $e->getMessage();
             return null;
+        }
+    }
+
+    public function update(Post $post): bool
+    {
+        try {
+            $stmt = $this->pdo->prepare('update posts set title = :title, content = :content where id = :id');
+            $stmt->execute(
+                [
+                    'id' => $post->id,
+                    'title' => $post->title,
+                    'content' => $post->content
+                ]);
+            if ($stmt->rowCount() < 1){
+                return false;
+            }
+
+            return true;
+        }catch (\Exception $e){
+            echo $e->getMessage();
+            return false;
         }
     }
 

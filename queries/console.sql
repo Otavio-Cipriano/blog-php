@@ -6,8 +6,9 @@ create table users(
 
 create table posts(
     id integer primary key,
-    title varchar(150),
-    content text,
+    title varchar(150) not null,
+    content text not null ,
+    slug text not null,
     published_at datetime default current_timestamp,
     updated_at datetime default current_timestamp
 );

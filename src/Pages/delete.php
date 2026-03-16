@@ -1,5 +1,3 @@
-<h1 class="mb-5">Editar Post</h1>
-
 <form class="form" action="/post/<?= $post->id ?>/update" method="POST">
     <div class="mt-3">
         <label for="inputTitle" class="form-label">Title</label>

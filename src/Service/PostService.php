@@ -9,7 +9,7 @@ class PostService
     public static function getPostsAndSetPagination(int $limit): array
     {
         $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT) ?? 1;
-        $page = max(1, (int) $page); //Impedir que pagian seja menor que 1
+        $page = max(1, (int) $page); //Impedir que pagina seja menor que 1
         $postsRepo = new PostsRepository();
         $numberPosts = $postsRepo->getNumberPosts();
         $totalPages = (int) ceil($numberPosts / $limit);
@@ -21,4 +21,6 @@ class PostService
 
         return [$page, $hasNext, $hasPrev, $posts, $totalPages];
     }
+
+
 }
