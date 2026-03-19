@@ -18,7 +18,7 @@ class PostsRepository
     public function fetchMany(int $limit = 10, int $offset = 0, string $filter = 'recent'): ?array
     {
         try {
-            $stmt = $this->pdo->prepare('select id, title, published_at from posts order by published_at desc limit :limit offset :offset');
+            $stmt = $this->pdo->prepare('select id, title, slug, published_at from posts order by published_at desc limit :limit offset :offset');
             $stmt->execute([
                 'limit' => $limit,
                 'offset' => $offset
@@ -43,15 +43,17 @@ class PostsRepository
         }
     }
 
-    public function fetchOne(int $id): Post|false
+    public function fetchOne(string $slug): Post|false
     {
         try {
-            $stmt = $this->pdo->prepare('select * from posts where id = :id');
-            $stmt->execute(['id' => $id]);
+            $stmt = $this->pdo->prepare('select * from posts where slug = :slug');
+            $stmt->execute(['slug' => $slug]);
             $post = $stmt->fetch(PDO::FETCH_ASSOC);
-            return new Post($post['id'],
+            return new Post(
+                $post['id'],
                 $post['title'],
                 $post['content'],
+                $post['slug'],
                 $post['published_at'],
                 $post['updated_at']);
         } catch (\PDOException $e) {
@@ -69,7 +71,8 @@ class PostsRepository
                 'content' => $post->content
             ]);
             $id = $this->pdo->lastInsertId();
-            return new Post($id, $post->title, $post->title, $post->publishedAt, $post->updatedAt);
+            $slug = Post::generateSlug($post->title);
+            return new Post($id, $post->title, $post->title, $slug, $post->publishedAt, $post->updatedAt);
         } catch (\PDOException $e) {
             echo $e->getMessage();
             return null;
@@ -97,4 +100,20 @@ class PostsRepository
         }
     }
 
+    public function delete(string $slug)
+    {
+        try {
+            $stmt = $this->pdo->prepare('delete from posts where slug = :slug');
+            $stmt->execute(['slug' => $slug]);
+            if ($stmt->rowCount() < 1){
+                return false;
+            }
+
+            return true;
+
+        }catch (\Exception $e){
+            echo $e->getMessage();
+            return false;
+        }
+    }
 }

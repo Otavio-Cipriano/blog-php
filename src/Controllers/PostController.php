@@ -13,14 +13,10 @@ class PostController
 {
     public static function index(Request $request, Response $response): void
     {
-        $postId = $request->params['id'];
+        $postId = $request->params['slug'];
         $postRepo = new PostsRepository();
         $post = $postRepo->fetchOne($postId);
         include __DIR__ . '/../Pages/post.php';
-    }
-
-    public static function delete()
-    {
     }
 
     public static function edit(Request $request): void
@@ -28,9 +24,9 @@ class PostController
         session_start();
         $errors = $_SESSION['errors']?? [];
         unset($_SESSION['errors']);
-        $postId = $request->params['id'];
+        $slug = $request->params['slug'];
         $postRepo = new PostsRepository();
-        $post = $postRepo->fetchOne($postId);
+        $post = $postRepo->fetchOne($slug);
         $_SESSION['post'] = $post->toArray();
         include __DIR__ . '/../Pages/update.php';
     }
@@ -110,5 +106,14 @@ class PostController
         header('Location: /post/create');
         exit();
 
+    }
+
+    public static function delete(Request $request): void
+    {
+        $slug = $request->params['slug'];
+        $postRepo = new PostsRepository();
+        $postRepo->delete($slug);
+        header('Location: /admin');
+        exit();
     }
 }

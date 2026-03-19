@@ -9,7 +9,7 @@
 <hr/>
 <div class="mt-5">
     <?php foreach ($posts as $post): ?>
-        <a href="/post/<?= $post->id ?>" class="article-link">
+        <a href="/post/<?= $post->slug ?>" class="article-link">
             <article class="row mb-4 mt-4 pt-2 pb-2">
                 <div class="col-lg-10 col-md-9">
                     <h3><?= $post->title ?></h3>

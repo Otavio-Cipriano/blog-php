@@ -11,7 +11,7 @@ class HomeController
     public static function index(Request $request, Response $response):void
     {
         [$page, $hasNext, $hasPrev, $posts, $totalPages] = PostService::getPostsAndSetPagination(10);
-
+//        var_dump($posts);
         include __DIR__ . '/../Pages/home.php';
     }
 }

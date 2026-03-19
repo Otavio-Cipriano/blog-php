@@ -11,11 +11,11 @@
  * */
 ?>
 <hr/>
-<a class="btn btn-primary" href="/post/create">Novo</a>
+<a class="btn btn-primary" href="/new">Novo</a>
 <div class="mt-5">
     <?php foreach ($posts as $post): ?>
         <article class="row mb-4 mt-4 pt-2 pb-2">
-            <a href="/post/<?= $post->id ?>" class="article-link col-lg-10 col-md-9">
+            <a href="/post/<?= $post->slug ?>" class="article-link col-lg-10 col-md-9">
                 <article>
                     <div>
                         <h3><?= $post->title ?></h3>
@@ -23,8 +23,8 @@
                 </article>
             </a>
             <div class="col-lg-2 col-md-3 text-end">
-                <a href="/post/<?= $post->id ?>/update">Update</a>
-                <a href="/delete">Delete</a>
+                <a href="/post/<?= $post->slug ?>/update">Update</a>
+                <a href="/post/<?= $post->slug?>/delete">Delete</a>
             </div>
         </article>
     <?php endforeach; ?>

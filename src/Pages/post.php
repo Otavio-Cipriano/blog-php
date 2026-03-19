@@ -1,4 +1,4 @@
-<div style="max-width: 800px; margin: auto">
+<div style="max-width: 1000px; margin: auto">
     <div>
         <a href="/" style=" text-decoration: none !important;">
             <span style="font-size: 2.5rem; font-weight: bolder;">

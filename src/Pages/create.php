@@ -2,7 +2,7 @@
 
 <h1>New Post</h1>
 
-<form class="form" action="/post/create" method="POST">
+<form class="form" action="/new" method="POST">
     <div class="mt-3">
         <label for="inputTitle" class="form-label">Title</label>
         <input id="inputTitle" name="title" class="form-control" placeholder="Post Title"/>
