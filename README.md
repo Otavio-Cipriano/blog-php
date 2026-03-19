@@ -50,43 +50,29 @@ To create the admin user, run:
 
 ## Getting Started
 
-Clone the repository:
+Clone the repository: `git clone https://github.com/Otavio-Cipriano/blog-php.git`
 
-`git clone https://github.com/your-username/your-repo.git`
-
-Navigate to the project folder:
-
-`cd your-repo`
+Navigate to the project folder: `cd your-repo`
 
 Set up the database:
 
-Create a database
+- Create a database
+- Run the SQL scripts located in queries/ 
+- Configure database credentials (e.g., .env or config file)
 
-Run the SQL scripts located in queries/
+Start the PHP development server: `php -S localhost:8000 -t public`
 
-Configure database credentials (e.g., .env or config file)
-
-Start the PHP development server:
-
-`php -S localhost:8000 -t public`
-
-Open in your browser:
-
-[localhost:8000](http://localhost:8000)
+Open in your browser: [http://localhost:8000](http://localhost:8000)
 
 ## Architecture
 
 The project follows a layered structure inspired by best practices:
 
-Controllers → Handle incoming requests
-
-Repositories → Data access layer
-
-Models → Domain entities
-
-Middlewares → Request filtering/interception
-
-Router → Route definitions and handling
+- Controllers → Handle incoming requests
+- Repositories → Data access layer
+- Models → Domain entities
+- Middlewares → Request filtering/interception
+- Router → Route definitions and handling
 
 ## Notes
 
@@ -105,3 +91,4 @@ This project covers important concepts such as:
 - Structuring a PHP application manually
 - Basic security practices (input sanitization)
 - Separation of concerns
+- Basic Authentication
