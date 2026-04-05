@@ -67,7 +67,7 @@ class Router
 
             if ($this->match($route['path'], $this->request->path, $params)) {
 
-                $this->checkMiddlewares($route['path']);
+//                $this->checkMiddlewares($route['path']);
                 $this->request->setParams($params);
 
                 [$controller, $action] = $route['action'];

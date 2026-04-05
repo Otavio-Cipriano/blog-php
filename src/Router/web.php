@@ -15,13 +15,14 @@ $router = new Router($request, $response);
 $router->setRoute('GET', '/', [HomeController::class, 'index']);
 $router->setRoute('GET', '/post/{slug}', [PostController::class, 'index']);
 $router->setRoute('GET', '/admin', [AdminController::class, 'index']);
-$router->setMiddleware([
-    '/admin',
-    '/post/create',
-    '/post/create',
-    '/post/{slug}/update',
-    '/post/{slug}/update'],
-    [Auth::class, 'checkUser']);
+
+//TODO: Arrumar Middleware
+//$router->setMiddleware([
+//    '/admin',
+//    '/new',
+//    '/logout',
+//    '/post/{slug}/update'],
+//    [Auth::class, 'checkUser']);
 
 
 $router->setRoute('GET', '/login', [AuthController::class, 'login']);

@@ -65,14 +65,14 @@ class PostsRepository
     public function create(Post $post): ?Post
     {
         try {
-            $stmt = $this->pdo->prepare('insert into posts (title, content) values (:title, :content)');
+            $stmt = $this->pdo->prepare('insert into posts (title, content, slug) values (:title, :content, :slug)');
             $stmt->execute([
                 'title' => $post->title,
-                'content' => $post->content
+                'content' => $post->content,
+                'slug' => $post->slug
             ]);
             $id = $this->pdo->lastInsertId();
-            $slug = Post::generateSlug($post->title);
-            return new Post($id, $post->title, $post->title, $slug, $post->publishedAt, $post->updatedAt);
+            return new Post($id, $post->title, $post->title, $post->slug, $post->publishedAt, $post->updatedAt);
         } catch (\PDOException $e) {
             echo $e->getMessage();
             return null;
@@ -110,6 +110,19 @@ class PostsRepository
             }
 
             return true;
+
+        }catch (\Exception $e){
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public function checkIfExistsBySlug(string $slug): bool
+    {
+        try {
+            $stmt = $this->pdo->prepare('SELECT COUNT(*) FROM posts WHERE slug = :slug');
+            $stmt->execute(['slug' => $slug]);
+            return $stmt->fetchColumn() > 0;
 
         }catch (\Exception $e){
             echo $e->getMessage();
