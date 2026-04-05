@@ -1,6 +1,9 @@
 # Personal Blog in PHP
 
 A fully functional blog built using pure PHP (no frameworks), focused on understanding core web application architecture and internal mechanics.
+
+Based on Roadmap project [here](https://roadmap.sh/projects/personal-blog)
+
 ## Features
 - ✅ Custom routing system (built from scratch)
 - ✅ Full CRUD for blog posts
